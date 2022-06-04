@@ -1,8 +1,22 @@
 IfcConvert
 ==========
+Usage: IfcConvert [options] <input.ifc> [<output>]
 
-This documentation is free software! You are free to contribute and help write
-this document.
+Converts (the geometry in) an IFC file into one of the following formats:
+.obj   WaveFront OBJ  (a .mtl file is also created)
+.dae   Collada        Digital Assets Exchange
+.glb   glTF           Binary glTF v2.0
+.stp   STEP           Standard for the Exchange of Product Data
+.igs   IGES           Initial Graphics Exchange Specification
+.xml   XML            Property definitions and decomposition tree
+.svg   SVG            Scalable Vector Graphics (2D floor plan)
+.h5    HDF            Hierarchical Data Format storing positions, normals and indices
+.ifc   IFC-SPF        Industry Foundation Classes
+
+If no output filename given, <input> will be used as the output file.
+
+Run 'IfcConvert --help' for more information.
+@todo Add help for single option
 
 .. toctree::
    :maxdepth: 1
@@ -14,3 +28,31 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+
+    cout_ << "Usage: IfcConvert [options] <input.ifc> [<output>]\n"
+        << "\n"
+        << "Converts (the geometry in) an IFC file into one of the following formats:\n"
+        << "  .obj   WaveFront OBJ  (a .mtl file is also created)\n"
+#ifdef WITH_OPENCOLLADA
+        << "  .dae   Collada        Digital Assets Exchange\n"
+#endif
+#ifdef WITH_GLTF
+		<< "  .glb   glTF           Binary glTF v2.0\n"
+#endif
+        << "  .stp   STEP           Standard for the Exchange of Product Data\n"
+        << "  .igs   IGES           Initial Graphics Exchange Specification\n"
+        << "  .xml   XML            Property definitions and decomposition tree\n"
+        << "  .svg   SVG            Scalable Vector Graphics (2D floor plan)\n"
+#ifdef WITH_HDF5
+		<< "  .h5    HDF            Hierarchical Data Format storing positions, normals and indices\n"
+#endif
+		<< "  .ifc   IFC-SPF        Industry Foundation Classes\n"
+		<< "\n"
+        << "If no output filename given, <input>" << IfcUtil::path::from_utf8(DEFAULT_EXTENSION) << " will be used as the output file.\n";
+    if (suggest_help) {
+        cout_ << "\nRun 'IfcConvert --help' for more information.";
+    }
+    cout_ << std::endl;
+}
